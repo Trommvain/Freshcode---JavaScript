@@ -30,22 +30,33 @@ class RangeValidator {
     }
 
     set from(value) {
-        if (typeof value !== 'number' || isNaN(value)) throw new Error('Value must be a number');
-            else if (value > this.#to) throw new Error(`'From' value must be less than 'to' value`);
-                else this.#from = value;
+        if (typeof value !== 'number' || isNaN(value)) {
+            throw new Error('Value must be a number');
+        }
+        if (value > this.#to) {
+            throw new Error(`'From' value must be less than 'to' value`);
+        }
+        this.#from = value;
     }
 
     set to(value) {
-        if (typeof value !== 'number' || isNaN(value)) throw new Error('Value must be a number');
-            else if (value < this.#from) throw new Error(`'To' value must be more than 'from' value`);
-                else this.#to = value;
+        if (typeof value !== 'number' || isNaN(value)) {
+            throw new Error('Value must be a number');
+        }
+        if (value < this.#from) {
+            throw new Error(`'To' value must be more than 'from' value`);
+        }
+        this.#to = value;
     }
 
     get range() {
-        return [this.#from, this.#to];
+        return [this.from, this.to];
     }
 
     validate(value) {
+        if (typeof value !== 'number' || isNaN(value)) {
+            throw new Error('Value must be a number');
+        }
         if (value >= this.#from && value <= this.#to) return value;
             else throw new Error(`Value don't match the range.`);
     }
