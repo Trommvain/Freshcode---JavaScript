@@ -17,27 +17,27 @@ class RangeValidator {
     #to;
 
     constructor(from, to) {
-        this.#from = from;
-        this.#to = to;
+        this.from = from;
+        this.to = to;
     }
 
-    get getFrom() {
+    get from() {
         return this.#from;
     }
 
-    get getTo() {
+    get to() {
         return this.#to;
     }
 
-    set setFrom(value) {
-        if (typeof value !== 'number') throw new Error('Value must be a number');
-            else if (value > this.#to) throw new Error('\'From\' value must be less than \'to\' value');
+    set from(value) {
+        if (typeof value !== 'number' || isNaN(value)) throw new Error('Value must be a number');
+            else if (value > this.#to) throw new Error(`'From' value must be less than 'to' value`);
                 else this.#from = value;
     }
 
-    set setTo(value) {
-        if (typeof value !== 'number') throw new Error('Value must be a number');
-            else if (value < this.#from) throw new Error('\'To\' value must be more than \'from\' value');
+    set to(value) {
+        if (typeof value !== 'number' || isNaN(value)) throw new Error('Value must be a number');
+            else if (value < this.#from) throw new Error(`'To' value must be more than 'from' value`);
                 else this.#to = value;
     }
 
@@ -47,22 +47,24 @@ class RangeValidator {
 
     validate(value) {
         if (value >= this.#from && value <= this.#to) return value;
-            else throw new Error('Value don\'t match the range.');
+            else throw new Error(`Value don't match the range.`);
     }
 }
 
 //Performance check
 
+// const myRange = new RangeValidator('test', 10);
+// const myRange = new RangeValidator(5, 2);
 const myRange = new RangeValidator(0, 10);
 
-console.log(myRange.getFrom);
-console.log(myRange.getTo);
-myRange.setFrom = 2;
-myRange.setTo = 5;
-console.log(myRange.getFrom);
-console.log(myRange.getTo);
-// myRange.setFrom = 5;
-// myRange.setTo = 2;
+console.log(myRange.from);
+console.log(myRange.to);
+myRange.from = 2;
+myRange.to = 5;
+console.log(myRange.from);
+console.log(myRange.to);
+// myRange.from = 5;
+// myRange.to = 2;
 console.log(myRange.range);
 console.log(myRange.validate(4));
 // console.log(myRange.validate(10));
